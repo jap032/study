@@ -1,0 +1,152 @@
+// Variables
+$color-bg: #ffffff;
+$color-text: #1a1a1a;
+$color-text-muted: #5f6368;
+$color-primary: #6c4de6;
+$color-primary-dark: #5638c9;
+$color-border: #e5e5e5;
+
+$font-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+$container-width: 960px;
+$spacing-unit: 8px;
+
+@mixin container {
+  max-width: $container-width;
+  margin: 0 auto;
+  padding: 0 ($spacing-unit * 3);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: $font-base;
+  color: $color-text;
+  background-color: $color-bg;
+  line-height: 1.6;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+// Header
+.header {
+  border-bottom: 1px solid $color-border;
+
+  &__inner {
+    @include container;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: $spacing-unit * 8;
+  }
+
+  &__logo {
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: $color-primary;
+  }
+
+  &__nav-list {
+    display: flex;
+    gap: $spacing-unit * 3;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__nav-link {
+    font-size: 0.95rem;
+    color: $color-text-muted;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+}
+
+// Hero
+.hero {
+  padding: ($spacing-unit * 12) 0;
+  background-color: #f7f6fd;
+
+  &__inner {
+    @include container;
+    text-align: center;
+  }
+
+  &__title {
+    margin: 0 0 ($spacing-unit * 2);
+    font-size: 2.5rem;
+    font-weight: 800;
+  }
+
+  &__subtitle {
+    margin: 0 0 ($spacing-unit * 4);
+    font-size: 1.1rem;
+    color: $color-text-muted;
+  }
+
+  &__cta {
+    display: inline-block;
+    padding: ($spacing-unit * 1.5) ($spacing-unit * 4);
+    border-radius: 6px;
+    background-color: $color-primary;
+    color: #fff;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: $color-primary-dark;
+    }
+  }
+}
+
+// About
+.about {
+  padding: ($spacing-unit * 10) 0;
+
+  &__inner {
+    @include container;
+    max-width: 640px;
+  }
+
+  &__title {
+    margin: 0 0 ($spacing-unit * 2);
+    font-size: 1.75rem;
+    font-weight: 700;
+  }
+
+  &__description {
+    margin: 0;
+    color: $color-text-muted;
+  }
+}
+
+// Footer
+.footer {
+  border-top: 1px solid $color-border;
+
+  &__inner {
+    @include container;
+    padding-top: $spacing-unit * 3;
+    padding-bottom: $spacing-unit * 3;
+  }
+
+  &__copyright {
+    margin: 0;
+    font-size: 0.85rem;
+    color: $color-text-muted;
+    text-align: center;
+  }
+}

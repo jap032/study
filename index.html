@@ -2,9 +2,51 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hello Claude</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <h1>Hello Claude</h1>
+  <header class="header">
+    <div class="header__inner">
+      <a class="header__logo" href="#hero">Claude</a>
+      <nav class="header__nav">
+        <ul class="header__nav-list">
+          <li class="header__nav-item">
+            <a class="header__nav-link" href="#hero">홈</a>
+          </li>
+          <li class="header__nav-item">
+            <a class="header__nav-link" href="#about">소개</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="hero">
+      <div class="hero__inner">
+        <h1 class="hero__title">Hello Claude</h1>
+        <p class="hero__subtitle">간단한 랜딩 페이지 예제입니다.</p>
+        <a class="hero__cta" href="#about">더 알아보기</a>
+      </div>
+    </section>
+
+    <section class="about" id="about">
+      <div class="about__inner">
+        <h2 class="about__title">소개</h2>
+        <p class="about__description">
+          이 페이지는 시맨틱 HTML5 구조와 BEM 네이밍 규칙을 따르는 SCSS로 작성된
+          간단한 랜딩 페이지입니다.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <p class="footer__copyright">&copy; 2026 Claude Study. All rights reserved.</p>
+    </div>
+  </footer>
 </body>
 </html>
