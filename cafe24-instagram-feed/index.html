@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cafe24 인스타그램 피드 샘플</title>
+  <link rel="stylesheet" href="css/insta-feed.css">
+</head>
+<body class="main">
+  <div id="wrapper">
+    <header id="header">
+      <div class="header-bottom">
+        <div class="inner">
+          <div class="logo"><a href="#">MIR9 SHOP</a></div>
+          <div class="mo-menu-btn"><button type="button" aria-label="메뉴 열기"><span></span></button></div>
+          <nav class="gnb">
+            <ul class="depth1">
+              <li><a href="#">SHOP</a>
+                <ul class="depth2">
+                  <li><a href="#">NEW</a></li>
+                  <li><a href="#">BEST</a></li>
+                </ul>
+              </li>
+              <li><a href="#instagram">INSTAGRAM</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main id="contents">
+      <!--
+        인스타그램 피드 섹션
+        - Cafe24 적용 시: 이 <section> 블록만 메인 html(예: /index.html)의 원하는 위치에 붙여넣기
+        - 설정은 .insta-feed 의 data-* 속성으로 한다 (스크립트 수정 불필요)
+          data-token    : 인스타그램 장기 액세스 토큰 (프록시 미사용 시)
+          data-endpoint : 프록시(Cloudflare Worker 등) 주소. 값이 있으면 토큰보다 우선 사용 (권장)
+          data-limit    : 노출 개수 (기본 8)
+          data-cache    : 브라우저 캐시 시간(분, 기본 60)
+        - token / endpoint 둘 다 비어 있으면 데모(더미) 데이터로 노출된다
+      -->
+      <section class="main-section main-section01" id="instagram">
+        <div class="inner">
+          <div class="insta-feed"
+               data-token=""
+               data-endpoint=""
+               data-limit="8"
+               data-cache="60">
+            <div class="insta-feed__head">
+              <h2 class="insta-feed__title">INSTAGRAM</h2>
+              <a class="insta-feed__account" href="https://www.instagram.com/" target="_blank" rel="noopener">@mir9_shop</a>
+            </div>
+
+            <ul class="insta-feed__list" aria-live="polite">
+              <!-- js/insta-feed.js 에서 li.insta-feed__item 렌더링 -->
+            </ul>
+
+            <p class="insta-feed__message" hidden></p>
+
+            <div class="insta-feed__foot">
+              <a class="insta-feed__more" href="https://www.instagram.com/" target="_blank" rel="noopener">인스타그램 바로가기</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer id="footer">
+      <div class="footer-bottom">
+        <div class="inner">
+          <p class="copyright">&copy; MIR9 SHOP. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="js/insta-feed.js"></script>
+</body>
+</html>
