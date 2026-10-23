@@ -1,0 +1,7 @@
+<!-- 임시 로고 : 피그마 원본 로고로 교체 필요 -->
+<svg xmlns="http://www.w3.org/2000/svg" width="36" height="162" viewBox="0 0 36 162" fill="none">
+  <g transform="translate(36 0) rotate(90)">
+    <text x="81" y="22" text-anchor="middle" fill="#fff" font-family="Pretendard, Inter, 'Helvetica Neue', Arial, sans-serif" font-size="20" letter-spacing="-0.3"><tspan font-weight="800">SNAP</tspan><tspan font-weight="400">PASS</tspan></text>
+    <path d="M1.5 25v6a4 4 0 0 0 4 4h151a4 4 0 0 0 4-4v-6" stroke="#eb6a00" stroke-width="2" stroke-linecap="round"/>
+  </g>
+</svg>
