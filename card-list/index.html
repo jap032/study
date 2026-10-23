@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SNAPPASS 카드리스트 샘플</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="main">
+  <div id="wrapper">
+    <header id="header">
+      <div class="header-bottom">
+        <div class="inner">
+          <h1 class="logo"><a href="#">ANDOPEN</a></h1>
+        </div>
+      </div>
+    </header>
+
+    <main id="contents">
+      <section class="main-section main-section01" id="solution">
+        <div class="inner">
+          <div class="arch-head">
+            <h2 class="arch-head__title">SNAPPASS Privacy Architecture</h2>
+            <p class="arch-head__desc">
+              <strong>AI optimizes and compresses the facial image for secure, high-density storage.</strong><br>
+              The image, permissions, and credentials are encrypted and securely encoded into a Card or QR code.
+            </p>
+          </div>
+
+          <!-- 카드리스트: PC는 마우스 오버, 모바일은 터치 시 선택 카드 확대 + 양옆 단계별 확대 -->
+          <ul class="snap-cards" data-snap-cards>
+            <li class="snap-cards__item snap-cards__item--card">
+              <button type="button" class="snap-cards__btn">
+                <span class="snap-cards__label">CARD</span>
+                <span class="snap-cards__text">사용자 보유 토큰 기반 인증정보 저장</span>
+              </button>
+            </li>
+            <li class="snap-cards__item snap-cards__item--qr">
+              <button type="button" class="snap-cards__btn">
+                <span class="snap-cards__label">QR Code</span>
+                <span class="snap-cards__text">사용자 보유 토큰 기반 인증정보 저장</span>
+              </button>
+            </li>
+            <li class="snap-cards__item snap-cards__item--chip">
+              <button type="button" class="snap-cards__btn">
+                <span class="snap-cards__text">Even if someone copies the Token,<br>they can't copy you.</span>
+              </button>
+            </li>
+            <li class="snap-cards__item snap-cards__item--offline">
+              <button type="button" class="snap-cards__btn">
+                <span class="snap-cards__title">네트워크 제한 환경에서도 운영 가능<br>현장 단말기 기반 인증 처리</span>
+                <span class="snap-cards__text">No connection of any kind<br>On-device authentication.</span>
+              </button>
+            </li>
+            <li class="snap-cards__item snap-cards__item--serverless">
+              <button type="button" class="snap-cards__btn">
+                <span class="snap-cards__title">중앙 생체정보 DB 의존도 최소화<br>개인정보 보호 중심 설계</span>
+                <strong class="snap-cards__big">Serverless</strong>
+                <span class="snap-cards__text">Nothing Stored,<br>Nothing Shared</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer id="footer">
+      <div class="footer-bottom">
+        <div class="inner">
+          <p class="copyright">&copy; ANDOPEN. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

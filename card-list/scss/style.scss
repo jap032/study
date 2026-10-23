@@ -1,0 +1,152 @@
+// ===== variables =====
+$breakpoint-sm: 575px;
+$breakpoint-md: 767px;
+$breakpoint-lg: 991px;
+$breakpoint-xl: 1199px;
+
+$color-black: #111;
+$color-gray: #555;
+$color-orange: #f07d00;
+$color-navy: #1b2a6b;
+
+// 카드 확대 단계 (선택 / 1단계 이웃 / 2단계 이웃)
+$snap-card-scale-active: 1.18;
+$snap-card-scale-near1: 1.09;
+$snap-card-scale-near2: 1.03;
+$snap-card-duration: .45s;
+$snap-card-easing: cubic-bezier(.22, .61, .36, 1);
+
+// ===== mixins =====
+@mixin lg-max { @media (max-width: $breakpoint-lg) { @content; } }
+@mixin md-max { @media (max-width: $breakpoint-md) { @content; } }
+
+// ===== base =====
+*, *::before, *::after { box-sizing: border-box; }
+html { font-size: 100%; @include md-max { font-size: 75%; } }
+body { margin: 0; font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Malgun Gothic", sans-serif; color: $color-black; }
+ul { margin: 0; padding: 0; list-style: none; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; }
+
+.inner { max-width: 85rem; margin: 0 auto; padding: 0 1.25rem; }
+
+#header .header-bottom .inner { display: flex; align-items: center; height: 5rem; }
+#header .logo { margin: 0; font-size: 1.25rem; font-weight: 800; }
+#footer .footer-bottom { padding: 2rem 0; background: #f4f4f4; font-size: .875rem; color: $color-gray; }
+
+// ===== main =====
+.main-section01 {
+  padding: 5rem 0 7.5rem;
+  overflow: hidden; // 확대된 카드가 가로 스크롤을 만들지 않도록
+}
+
+.arch-head {
+  margin-bottom: 3rem;
+
+  &__title { margin: 0 0 1rem; font-size: 2.25rem; letter-spacing: -.02em; }
+  &__desc { margin: 0; font-size: .9375rem; line-height: 1.6; color: $color-gray; }
+}
+
+// ===== 카드리스트 컴포넌트 =====
+.snap-cards {
+  display: flex;
+  gap: .375rem;
+  padding: 2.5rem 0; // 확대 여유 공간
+
+  &__item {
+    position: relative;
+    flex: 1 1 0;
+    min-width: 0;
+    aspect-ratio: 3 / 4.4;
+    border-radius: .5rem;
+    overflow: hidden;
+    transform: scale(1);
+    transition:
+      transform $snap-card-duration $snap-card-easing,
+      flex-grow $snap-card-duration $snap-card-easing,
+      box-shadow $snap-card-duration $snap-card-easing,
+      filter $snap-card-duration $snap-card-easing;
+    will-change: transform;
+
+    // 카드별 배경 (실제 작업 시 background-image로 교체)
+    &--card       { background: linear-gradient(160deg, #e9e9e9, #b9b9b9); }
+    &--qr         { background: linear-gradient(160deg, #dcdcdc, #a9a9a9); }
+    &--chip       { background: radial-gradient(circle at 30% 30%, #3b5bd6, $color-navy 70%); color: #fff; }
+    &--offline    { background: linear-gradient(160deg, #ff9a1f, $color-orange); color: #fff; }
+    &--serverless { background: linear-gradient(160deg, #3a4a8c, #0f1740); color: #fff; }
+
+    // 단계별 상태 (JS가 거리값에 따라 부여)
+    &.is-near2  { z-index: 2; transform: scale($snap-card-scale-near2); }
+    &.is-near1  { z-index: 3; transform: scale($snap-card-scale-near1); box-shadow: 0 .75rem 1.5rem rgba(0, 0, 0, .18); }
+    &.is-active { z-index: 4; transform: scale($snap-card-scale-active); box-shadow: 0 1.25rem 2.5rem rgba(0, 0, 0, .28); }
+  }
+
+  &__btn {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    border: 0;
+    background: none;
+    text-align: center;
+    word-break: keep-all;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+
+    &:focus-visible { outline: 3px solid $color-orange; outline-offset: -3px; }
+  }
+
+  &__label { align-self: flex-start; font-size: .6875rem; color: $color-gray; }
+  &__title { font-size: .75rem; font-weight: 700; line-height: 1.4; }
+  &__big   { margin: auto 0 .5rem; font-size: 1.5rem; }
+  &__text  { margin-top: auto; font-size: .8125rem; font-weight: 600; line-height: 1.4; }
+  &__big + &__text { margin-top: 0; }
+
+  // 선택 중일 때 나머지 카드는 살짝 어둡게
+  &.is-focused &__item:not(.is-active) { filter: brightness(.92); }
+
+  // ----- 태블릿/모바일: scale 대신 flex-grow로 폭을 단계별 확장 (좁은 화면에서도 겹침/잘림 없이) -----
+  @include lg-max {
+    gap: .25rem;
+    padding: 0;
+
+    &__item {
+      aspect-ratio: auto;
+      height: 26rem;
+
+      &.is-near2,
+      &.is-near1,
+      &.is-active { transform: none; }
+
+      &.is-near2  { flex-grow: 1.3; }
+      &.is-near1  { flex-grow: 1.8; }
+      &.is-active { flex-grow: 4.5; }
+    }
+
+    &__btn { padding: .75rem .5rem; }
+
+    // 좁아진 카드는 텍스트 숨김 → 선택 카드만 내용 노출
+    &__label, &__title, &__big, &__text {
+      opacity: 0;
+      transition: opacity .2s;
+      white-space: nowrap;
+    }
+    &__item.is-active &__label,
+    &__item.is-active &__title,
+    &__item.is-active &__big,
+    &__item.is-active &__text {
+      opacity: 1;
+      white-space: normal;
+      transition-delay: .2s;
+    }
+  }
+
+  @include md-max {
+    &__item { height: 22rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &__item { transition: none; }
+  }
+}
