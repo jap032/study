@@ -15,7 +15,7 @@ $snap-card-scale-near1: 1.09;
 $snap-card-scale-near2: 1.03;
 $snap-card-duration: .45s;
 $snap-card-easing: cubic-bezier(.22, .61, .36, 1);
-$snap-card-delay: .12s; // 1차 z-index 전환 후 2차 크기 변환까지의 간격
+$snap-card-shrink-duration: .25s; // 다른 카드로 이동 시 원래 크기로 작아지는 시간 (JS가 --snap-card-shrink로 읽음)
 
 // 단계별 z-index
 $snap-card-z-base: 10;
@@ -59,6 +59,7 @@ button { font: inherit; color: inherit; }
   display: flex;
   gap: .375rem;
   padding: 2.5rem 0; // 확대 여유 공간
+  --snap-card-shrink: #{$snap-card-shrink-duration};
 
   &__item {
     position: relative;
@@ -69,11 +70,11 @@ button { font: inherit; color: inherit; }
     overflow: hidden;
     z-index: $snap-card-z-base;
     transform: scale(1);
-    // 1차: z-index 즉시 전환 → 2차: $snap-card-delay 후 크기·그림자 변환
+    // z-index는 즉시 전환 (모든 카드가 원래 크기일 때 바뀌므로 겹침 변화가 보이지 않음)
     transition:
       z-index 0s,
-      transform $snap-card-duration $snap-card-easing $snap-card-delay,
-      box-shadow $snap-card-duration $snap-card-easing $snap-card-delay,
+      transform $snap-card-duration $snap-card-easing,
+      box-shadow $snap-card-duration $snap-card-easing,
       flex-grow $snap-card-duration $snap-card-easing,
       filter $snap-card-duration $snap-card-easing;
     will-change: transform;
@@ -115,6 +116,14 @@ button { font: inherit; color: inherit; }
 
   // 선택 중일 때 나머지 카드는 살짝 어둡게
   &.is-focused &__item:not(.is-active) { filter: brightness(.92); }
+
+  // 다른 카드로 이동 시 1단계: 단계 클래스(z-index)는 유지한 채 모두 원래 크기로 축소
+  &.is-shrinking &__item {
+    transform: scale(1);
+    box-shadow: none;
+    transition-duration: 0s, $snap-card-shrink-duration, $snap-card-shrink-duration, $snap-card-duration, $snap-card-duration;
+    transition-timing-function: ease-in;
+  }
 
   // ----- 태블릿/모바일: scale 대신 flex-grow로 폭을 단계별 확장 (좁은 화면에서도 겹침/잘림 없이) -----
   @include lg-max {
