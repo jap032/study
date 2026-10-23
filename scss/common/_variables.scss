@@ -1,0 +1,43 @@
+// ==========================================================================
+// Variables
+// ==========================================================================
+
+// Breakpoint
+$breakpoint-sm: 575px;
+$breakpoint-md: 767px;
+$breakpoint-lg: 991px;
+$breakpoint-xl: 1199px;
+
+// Font
+$font-kr: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+$font-en: "Inter", $font-kr;
+
+// Color
+$color-white: #fff;
+$color-black: #222;
+$color-point: #eb6a00;
+$color-bg-dark: #444;
+
+// Layout
+$inner-width: 100rem;     // 1600px
+$inner-padding: 1.25rem;
+
+// Main - Product Line-up (main-section03)
+$main-lineup-stage-width: 1601;   // 디자인 기준 카드 영역 전체 폭(px)
+$main-lineup-card-width: 896;
+$main-lineup-card-height: 537;
+$main-lineup-card-gap: 141;       // 카드 간 노출 폭
+$main-lineup-card-radius: 40;
+$main-lineup-card-border: #555;
+$main-lineup-card-shadow: rgba(0, 0, 0, 0.25);
+$main-lineup-card-ease: cubic-bezier(0.65, 0, 0.35, 1);
+$main-lineup-card-duration: 0.8s;
+
+$main-lineup-snappass-bg: #333;
+$main-lineup-snappin-card-bg: #ee7a06;
+$main-lineup-snappin-qr-bg: #cfcfcf;
+$main-lineup-snapcheck-moai-bg: #505050;
+$main-lineup-snapcheck-kiosk-bg: #404040;
+$main-lineup-spms-bg: #383838;
+$main-lineup-text-color: $color-white;
+$main-lineup-text-color-light-bg: $color-black;

@@ -1,0 +1,22 @@
+@use "sass:math";
+
+// ==========================================================================
+// Mixins
+// ==========================================================================
+
+@mixin sm-max { @media (max-width: $breakpoint-sm) { @content; } }
+@mixin md-max { @media (max-width: $breakpoint-md) { @content; } }
+@mixin lg-max { @media (max-width: $breakpoint-lg) { @content; } }
+@mixin xl-max { @media (max-width: $breakpoint-xl) { @content; } }
+@mixin xl-min { @media (min-width: $breakpoint-xl + 1) { @content; } }
+
+// px → rem
+@function rem($px) {
+  @return math.div($px, 16) * 1rem;
+}
+
+// 디자인 px → 카드 스테이지(container) 기준 비율 단위
+// 스테이지가 디자인 폭(1601px)일 때 1:1, 작아지면 비율대로 축소
+@function cq($px) {
+  @return math.div($px, $main-lineup-stage-width) * 100cqw;
+}

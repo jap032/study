@@ -1,0 +1,537 @@
+// ==========================================================================
+// Main
+// ==========================================================================
+
+// --------------------------------------------------------------------------
+// main-section03 : Product Line-up (카드형)
+//  - PC(1200px~)  : 6장 카드가 141px씩 겹쳐진 형태, hover 시 해당 카드가 펼쳐짐
+//  - Tablet/Mo    : 세로로 겹쳐진 아코디언, 터치 시 펼쳐짐
+// --------------------------------------------------------------------------
+$lineup-strip: $main-lineup-card-width - $main-lineup-card-gap - ($main-lineup-card-radius * 2); // 가려지는 폭 (위 카드 밑으로 모서리 2배만큼 겹침 → 이음새 틈 방지)
+
+.main-section03 {
+  position: relative;
+  padding: rem(243) 0 rem(180);
+  background-color: $color-bg-dark;
+  overflow: hidden;
+
+  // 배경 이미지 (디자인: opacity 10%)
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("../../images/main/lineup-bg.png") no-repeat center / cover;
+    opacity: 0.1;
+    pointer-events: none;
+  }
+
+  .inner {
+    position: relative;
+  }
+
+  @include xl-max {
+    padding: rem(140) 0 rem(100);
+  }
+
+  @include md-max {
+    padding: rem(100) 0 rem(80);
+  }
+}
+
+.lineup {
+  // 공통 ------------------------------------------------------------------
+  &__item {
+    --card-bg: #{$main-lineup-snappass-bg};
+    --card-color: #{$main-lineup-text-color};
+
+    &--snappin-card { --card-bg: #{$main-lineup-snappin-card-bg}; }
+    &--snappin-qr { --card-bg: #{$main-lineup-snappin-qr-bg}; --card-color: #{$main-lineup-text-color-light-bg}; }
+    &--snapcheck-moai { --card-bg: #{$main-lineup-snapcheck-moai-bg}; }
+    &--snapcheck-kiosk { --card-bg: #{$main-lineup-snapcheck-kiosk-bg}; }
+    &--spms { --card-bg: #{$main-lineup-spms-bg}; }
+  }
+
+  &__card {
+    position: relative;
+    height: 100%;
+    border: 1px solid $main-lineup-card-border;
+    color: var(--card-color);
+    background-color: var(--card-bg);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  &__item.is-active &__card {
+    cursor: default;
+  }
+
+  &__tab {
+    display: block;
+    text-align: left;
+
+    &:focus-visible {
+      outline: 2px solid $color-point;
+      outline-offset: 4px;
+    }
+  }
+
+  &__label {
+    display: block;
+    font-family: $font-en;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    white-space: nowrap;
+
+    b { font-weight: 800; }
+    span { font-weight: 300; }
+  }
+
+  // 패널 : on 상태일 때 콘텐츠가 자연스럽게 떠오름
+  &__panel-inner {
+    opacity: 0;
+    transform: translateY(rem(20));
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0.3s;
+    visibility: hidden;
+  }
+
+  &__item.is-active &__panel-inner {
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+    transition: opacity 0.6s ease 0.35s, transform 0.6s $main-lineup-card-ease 0.35s, visibility 0s;
+  }
+
+  &__img {
+    opacity: 0;
+    transform: translate(rem(30), rem(10));
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  &__item.is-active &__img {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.8s ease 0.5s, transform 0.9s $main-lineup-card-ease 0.5s;
+  }
+
+  &__title {
+    font-size: 3.125rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+
+    small {
+      font-size: 0.68em;
+      font-weight: 700;
+    }
+  }
+
+  &__sub {
+    font-size: rem(22);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+
+  &__icon {
+    position: relative;
+    display: inline-flex;
+    gap: rem(15);
+    width: rem(44);
+    height: rem(52);
+    font-size: rem(12);
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      width: rem(28);
+      height: rem(40);
+      border-radius: rem(4);
+      background-color: currentColor;
+    }
+
+    &::before { top: rem(12); left: rem(4); opacity: 0.7; }
+    &::after { top: 0; left: 0; }
+
+    span {
+      position: absolute;
+      top: rem(2);
+      left: rem(43);
+    }
+  }
+
+  &__desc {
+    font-size: rem(18);
+    font-weight: 500;
+    line-height: 1.22;
+    letter-spacing: -0.02em;
+  }
+
+  &__bullet {
+    li {
+      position: relative;
+      padding-left: rem(14);
+      font-size: rem(18);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: rem(6);
+        height: rem(6);
+        margin-top: rem(-3);
+        border-radius: 50%;
+        background-color: currentColor;
+      }
+    }
+  }
+
+  &__intro-more {
+    display: inline-flex;
+    align-items: center;
+    gap: rem(25);
+    font-size: rem(30);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: $color-point;
+
+    img {
+      transition: transform 0.4s $main-lineup-card-ease;
+    }
+
+    &:hover img,
+    &:focus-visible img {
+      transform: translateX(rem(6));
+    }
+  }
+
+  &__logo-v {
+    display: none;
+  }
+
+  // PC (1200px~) -----------------------------------------------------------
+  @include xl-min {
+    position: relative;
+    container-type: inline-size;
+    max-width: rem($main-lineup-stage-width);
+    margin: 0 auto;
+    aspect-ratio: #{$main-lineup-stage-width} / #{$main-lineup-card-height};
+
+    &__item {
+      position: absolute;
+      top: 0;
+      left: calc(var(--i) * #{cq($main-lineup-card-gap)});
+      z-index: var(--z, 1);
+      width: cq($main-lineup-card-width);
+      height: 100%;
+      filter: drop-shadow(cq(42) 0 cq(25.25) $main-lineup-card-shadow);
+
+      &:last-child {
+        filter: none;
+      }
+    }
+
+    // 펼쳐진 카드 / 왼쪽·오른쪽으로 접힌 카드를 clip-path로 표현
+    // 모든 카드가 같은 duration·easing으로 움직여 경계가 끊김 없이 이어진다
+    &__card {
+      border-radius: cq($main-lineup-card-radius);
+      clip-path: inset(0 0 0 0 round cq($main-lineup-card-radius));
+      transition: clip-path $main-lineup-card-duration $main-lineup-card-ease;
+    }
+
+    &__item.is-right &__card {
+      clip-path: inset(0 0 0 cq($lineup-strip) round cq($main-lineup-card-radius));
+    }
+
+    &__item.is-left &__card {
+      clip-path: inset(0 cq($lineup-strip) 0 0 round cq($main-lineup-card-radius));
+    }
+
+    // 세로 탭 라벨 : 접힌 방향을 따라 카드와 함께 이동
+    &__tab {
+      position: absolute;
+      top: cq(44);
+      left: cq(817);
+      z-index: 2;
+      transition: transform $main-lineup-card-duration $main-lineup-card-ease;
+    }
+
+    &__item.is-left &__tab {
+      transform: translateX(cq(39 - 817));
+    }
+
+    &__label {
+      font-size: cq(30);
+      writing-mode: vertical-rl;
+    }
+
+    // 01 SNAPPASS : 접혔을 때만 세로 로고 노출
+    &__item--snappass &__tab {
+      left: cq(39);
+      top: cq(45);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    &__item--snappass.is-left &__tab {
+      transform: none;
+      opacity: 1;
+      transition: opacity 0.5s ease 0.3s;
+    }
+
+    &__item--snappass &__label {
+      display: none;
+    }
+
+    &__logo-v {
+      display: block;
+      width: cq(36);
+      height: cq(162);
+    }
+
+    &__panel,
+    &__panel-inner {
+      position: absolute;
+      inset: 0;
+    }
+
+    &__panel-inner {
+      padding: cq(61) cq(51);
+    }
+
+    &__title {
+      font-size: cq(50);
+    }
+
+    &__sub {
+      margin-top: cq(6);
+      font-size: cq(22);
+    }
+
+    &__icon {
+      margin-top: cq(30);
+      width: cq(44);
+      height: cq(52);
+      font-size: cq(12);
+
+      &::before { top: cq(12); left: cq(4); width: cq(28); height: cq(40); border-radius: cq(4); }
+      &::after { width: cq(28); height: cq(40); border-radius: cq(4); }
+      span { top: cq(2); left: cq(43); }
+    }
+
+    &__desc {
+      width: cq(436);
+      margin-top: cq(33);
+      font-size: cq(18);
+    }
+
+    &__bullet {
+      margin-top: cq(23);
+
+      li {
+        padding-left: cq(14);
+        font-size: cq(18);
+
+        &::before {
+          width: cq(6);
+          height: cq(6);
+          margin-top: cq(-3);
+        }
+      }
+    }
+
+    &__img {
+      position: absolute;
+      top: cq(225);
+      left: cq(487);
+      width: cq(399);
+    }
+
+    // 01 SNAPPASS 인트로
+    &__intro {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      padding: 0 cq(50) 0 cq(97);
+    }
+
+    &__intro-logo {
+      width: cq(256);
+    }
+
+    &__intro-more {
+      margin-left: auto;
+      gap: cq(25);
+      font-size: cq(30);
+
+      img {
+        width: cq(15.56);
+      }
+    }
+  }
+
+  // Tablet / Mobile (~1199px) ----------------------------------------------
+  @include xl-max {
+    display: flex;
+    flex-direction: column;
+    max-width: rem(720);
+    margin: 0 auto;
+
+    &__item {
+      position: relative;
+      z-index: var(--i);
+      filter: drop-shadow(0 rem(-8) rem(16) $main-lineup-card-shadow);
+
+      & + & {
+        margin-top: rem(-32);
+      }
+
+      &:first-child {
+        filter: none;
+      }
+    }
+
+    &__card {
+      padding-bottom: rem(32); // 다음 카드에 겹쳐지는 영역
+      border-radius: rem(28);
+    }
+
+    &__item:last-child &__card {
+      padding-bottom: 0;
+    }
+
+    &__tab {
+      position: relative;
+      width: 100%;
+      padding: rem(24) rem(28);
+
+      // 펼침 표시
+      &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: rem(30);
+        width: rem(10);
+        height: rem(10);
+        margin-top: rem(-7);
+        border-right: 2px solid currentColor;
+        border-bottom: 2px solid currentColor;
+        transform: rotate(45deg);
+        transition: transform 0.5s $main-lineup-card-ease;
+      }
+    }
+
+    &__item.is-active &__tab::after {
+      transform: translateY(rem(4)) rotate(-135deg);
+    }
+
+    &__label {
+      font-size: rem(24);
+    }
+
+    &__item--snappass &__label {
+      display: none;
+    }
+
+    &__item--snappass &__tab::before {
+      content: "";
+      display: block;
+      width: rem(130);
+      height: rem(30);
+      background: url("../../images/main/logo-snappass.svg") no-repeat left center / contain;
+    }
+
+    // 높이 0 → auto 자연스러운 펼침
+    &__panel {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.6s $main-lineup-card-ease;
+    }
+
+    &__item.is-active &__panel {
+      grid-template-rows: 1fr;
+    }
+
+    &__panel-inner {
+      min-height: 0;
+      overflow: hidden;
+      padding: 0 rem(28);
+      transition-delay: 0s;
+    }
+
+    &__item.is-active &__panel-inner {
+      padding-bottom: rem(32);
+      transition-delay: 0.15s;
+    }
+
+    &__title {
+      font-size: rem(36);
+    }
+
+    &__sub {
+      margin-top: rem(6);
+      font-size: rem(18);
+    }
+
+    &__icon {
+      margin-top: rem(20);
+    }
+
+    &__desc {
+      margin-top: rem(20);
+      font-size: rem(16);
+    }
+
+    &__bullet {
+      margin-top: rem(16);
+
+      li {
+        font-size: rem(16);
+      }
+    }
+
+    &__img {
+      display: block;
+      width: 100%;
+      max-width: rem(400);
+      margin: rem(24) auto 0;
+    }
+
+    &__intro-logo {
+      display: none;
+    }
+
+    &__intro-more {
+      font-size: rem(22);
+
+      img {
+        width: rem(10);
+      }
+    }
+  }
+
+  @include md-max {
+    &__tab {
+      padding: rem(22) rem(24);
+    }
+
+    &__panel-inner {
+      padding: 0 rem(24);
+    }
+
+    &__title {
+      font-size: rem(32);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lineup *,
+  .lineup *::before,
+  .lineup *::after {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+}

@@ -1,0 +1,50 @@
+// ==========================================================================
+// Common (header / footer / container)
+// ==========================================================================
+
+.inner {
+  max-width: $inner-width + ($inner-padding * 2);
+  margin: 0 auto;
+  padding: 0 $inner-padding;
+}
+
+#header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+
+  .header-bottom .inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: rem(100);
+  }
+
+  .logo a {
+    font-family: $font-en;
+    font-size: rem(24);
+    font-weight: 800;
+    color: $color-white;
+  }
+
+  .depth1 {
+    display: flex;
+    gap: rem(40);
+
+    > li > a {
+      font-size: rem(16);
+      color: $color-white;
+    }
+  }
+}
+
+#footer {
+  .footer-bottom {
+    padding: rem(30) 0;
+    font-size: rem(14);
+    color: #888;
+    background-color: #222;
+  }
+}
