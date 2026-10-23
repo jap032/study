@@ -15,8 +15,9 @@ $snap-card-scale-near1: 1.09;
 $snap-card-scale-near2: 1.03;
 $snap-card-duration: .45s;
 $snap-card-easing: cubic-bezier(.22, .61, .36, 1);
+$snap-card-delay: .12s; // 1차 z-index 전환 후 2차 크기 변환까지의 간격
 
-// 단계별 z-index — 값 간격을 넓게 두면 transition 중 정수 보간이 촘촘해져 겹침 전환이 부드러움
+// 단계별 z-index
 $snap-card-z-base: 10;
 $snap-card-z-near2: 20;
 $snap-card-z-near1: 30;
@@ -66,14 +67,14 @@ button { font: inherit; color: inherit; }
     aspect-ratio: 3 / 4.4;
     border-radius: .5rem;
     overflow: hidden;
-    z-index: $snap-card-z-base; // auto는 보간이 안 되므로 반드시 숫자로 지정
+    z-index: $snap-card-z-base;
     transform: scale(1);
-    // z-index를 transform과 같은 시간·이징으로 보간 → 두 카드 크기가 같아지는 순간 앞뒤가 바뀜
+    // 1차: z-index 즉시 전환 → 2차: $snap-card-delay 후 크기·그림자 변환
     transition:
-      transform $snap-card-duration $snap-card-easing,
-      z-index $snap-card-duration $snap-card-easing,
+      z-index 0s,
+      transform $snap-card-duration $snap-card-easing $snap-card-delay,
+      box-shadow $snap-card-duration $snap-card-easing $snap-card-delay,
       flex-grow $snap-card-duration $snap-card-easing,
-      box-shadow $snap-card-duration $snap-card-easing,
       filter $snap-card-duration $snap-card-easing;
     will-change: transform;
 
