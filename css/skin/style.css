@@ -250,6 +250,16 @@ button {
   top: 0.125rem;
   left: 2.6875rem;
 }
+.lineup__icon--svg::before, .lineup__icon--svg::after {
+  content: none;
+}
+.lineup__icon--svg svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2rem;
+  height: 2.5rem;
+}
 .lineup__desc {
   font-size: 1.125rem;
   font-weight: 500;
@@ -391,6 +401,10 @@ button {
   .lineup__icon span {
     top: 0.1249219238cqw;
     left: 2.6858213616cqw;
+  }
+  .lineup__icon svg {
+    width: 1.9987507808cqw;
+    height: 2.498438476cqw;
   }
   .lineup__desc {
     width: 27.2329793879cqw;

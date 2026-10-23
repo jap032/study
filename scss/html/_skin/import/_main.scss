@@ -157,6 +157,22 @@ $lineup-strip: $main-lineup-card-width - $main-lineup-card-gap - ($main-lineup-c
       top: rem(2);
       left: rem(43);
     }
+
+    // SVG 아이콘형 (QR / DEVICE / KIOSK / SYSTEM)
+    &--svg {
+      &::before,
+      &::after {
+        content: none;
+      }
+
+      svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: rem(32);
+        height: rem(40);
+      }
+    }
   }
 
   &__desc {
@@ -319,6 +335,7 @@ $lineup-strip: $main-lineup-card-width - $main-lineup-card-gap - ($main-lineup-c
       &::before { top: cq(12); left: cq(4); width: cq(28); height: cq(40); border-radius: cq(4); }
       &::after { width: cq(28); height: cq(40); border-radius: cq(4); }
       span { top: cq(2); left: cq(43); }
+      svg { width: cq(32); height: cq(40); }
     }
 
     &__desc {
