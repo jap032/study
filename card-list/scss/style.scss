@@ -15,13 +15,6 @@ $snap-card-scale-near1: 1.09;
 $snap-card-scale-near2: 1.03;
 $snap-card-duration: .45s;
 $snap-card-easing: cubic-bezier(.22, .61, .36, 1);
-$snap-card-shrink-duration: .25s; // 다른 카드로 이동 시 원래 크기로 작아지는 시간 (JS가 --snap-card-shrink로 읽음)
-
-// 단계별 z-index
-$snap-card-z-base: 10;
-$snap-card-z-near2: 20;
-$snap-card-z-near1: 30;
-$snap-card-z-active: 40;
 
 // ===== mixins =====
 @mixin lg-max { @media (max-width: $breakpoint-lg) { @content; } }
@@ -59,7 +52,6 @@ button { font: inherit; color: inherit; }
   display: flex;
   gap: .375rem;
   padding: 2.5rem 0; // 확대 여유 공간
-  --snap-card-shrink: #{$snap-card-shrink-duration};
 
   &__item {
     position: relative;
@@ -68,14 +60,11 @@ button { font: inherit; color: inherit; }
     aspect-ratio: 3 / 4.4;
     border-radius: .5rem;
     overflow: hidden;
-    z-index: $snap-card-z-base;
     transform: scale(1);
-    // z-index는 즉시 전환 (모든 카드가 원래 크기일 때 바뀌므로 겹침 변화가 보이지 않음)
     transition:
-      z-index 0s,
       transform $snap-card-duration $snap-card-easing,
-      box-shadow $snap-card-duration $snap-card-easing,
       flex-grow $snap-card-duration $snap-card-easing,
+      box-shadow $snap-card-duration $snap-card-easing,
       filter $snap-card-duration $snap-card-easing;
     will-change: transform;
 
@@ -87,9 +76,9 @@ button { font: inherit; color: inherit; }
     &--serverless { background: linear-gradient(160deg, #3a4a8c, #0f1740); color: #fff; }
 
     // 단계별 상태 (JS가 거리값에 따라 부여)
-    &.is-near2  { z-index: $snap-card-z-near2; transform: scale($snap-card-scale-near2); }
-    &.is-near1  { z-index: $snap-card-z-near1; transform: scale($snap-card-scale-near1); box-shadow: 0 .75rem 1.5rem rgba(0, 0, 0, .18); }
-    &.is-active { z-index: $snap-card-z-active; transform: scale($snap-card-scale-active); box-shadow: 0 1.25rem 2.5rem rgba(0, 0, 0, .28); }
+    &.is-near2  { z-index: 2; transform: scale($snap-card-scale-near2); }
+    &.is-near1  { z-index: 3; transform: scale($snap-card-scale-near1); box-shadow: 0 .75rem 1.5rem rgba(0, 0, 0, .18); }
+    &.is-active { z-index: 4; transform: scale($snap-card-scale-active); box-shadow: 0 1.25rem 2.5rem rgba(0, 0, 0, .28); }
   }
 
   &__btn {
@@ -116,14 +105,6 @@ button { font: inherit; color: inherit; }
 
   // 선택 중일 때 나머지 카드는 살짝 어둡게
   &.is-focused &__item:not(.is-active) { filter: brightness(.92); }
-
-  // 다른 카드로 이동 시 1단계: 단계 클래스(z-index)는 유지한 채 모두 원래 크기로 축소
-  &.is-shrinking &__item {
-    transform: scale(1);
-    box-shadow: none;
-    transition-duration: 0s, $snap-card-shrink-duration, $snap-card-shrink-duration, $snap-card-duration, $snap-card-duration;
-    transition-timing-function: ease-in;
-  }
 
   // ----- 태블릿/모바일: scale 대신 flex-grow로 폭을 단계별 확장 (좁은 화면에서도 겹침/잘림 없이) -----
   @include lg-max {
