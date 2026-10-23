@@ -16,6 +16,12 @@ $snap-card-scale-near2: 1.03;
 $snap-card-duration: .45s;
 $snap-card-easing: cubic-bezier(.22, .61, .36, 1);
 
+// 단계별 z-index — 값 간격을 넓게 두면 transition 중 정수 보간이 촘촘해져 겹침 전환이 부드러움
+$snap-card-z-base: 10;
+$snap-card-z-near2: 20;
+$snap-card-z-near1: 30;
+$snap-card-z-active: 40;
+
 // ===== mixins =====
 @mixin lg-max { @media (max-width: $breakpoint-lg) { @content; } }
 @mixin md-max { @media (max-width: $breakpoint-md) { @content; } }
@@ -60,9 +66,12 @@ button { font: inherit; color: inherit; }
     aspect-ratio: 3 / 4.4;
     border-radius: .5rem;
     overflow: hidden;
+    z-index: $snap-card-z-base; // auto는 보간이 안 되므로 반드시 숫자로 지정
     transform: scale(1);
+    // z-index를 transform과 같은 시간·이징으로 보간 → 두 카드 크기가 같아지는 순간 앞뒤가 바뀜
     transition:
       transform $snap-card-duration $snap-card-easing,
+      z-index $snap-card-duration $snap-card-easing,
       flex-grow $snap-card-duration $snap-card-easing,
       box-shadow $snap-card-duration $snap-card-easing,
       filter $snap-card-duration $snap-card-easing;
@@ -76,9 +85,9 @@ button { font: inherit; color: inherit; }
     &--serverless { background: linear-gradient(160deg, #3a4a8c, #0f1740); color: #fff; }
 
     // 단계별 상태 (JS가 거리값에 따라 부여)
-    &.is-near2  { z-index: 2; transform: scale($snap-card-scale-near2); }
-    &.is-near1  { z-index: 3; transform: scale($snap-card-scale-near1); box-shadow: 0 .75rem 1.5rem rgba(0, 0, 0, .18); }
-    &.is-active { z-index: 4; transform: scale($snap-card-scale-active); box-shadow: 0 1.25rem 2.5rem rgba(0, 0, 0, .28); }
+    &.is-near2  { z-index: $snap-card-z-near2; transform: scale($snap-card-scale-near2); }
+    &.is-near1  { z-index: $snap-card-z-near1; transform: scale($snap-card-scale-near1); box-shadow: 0 .75rem 1.5rem rgba(0, 0, 0, .18); }
+    &.is-active { z-index: $snap-card-z-active; transform: scale($snap-card-scale-active); box-shadow: 0 1.25rem 2.5rem rgba(0, 0, 0, .28); }
   }
 
   &__btn {
